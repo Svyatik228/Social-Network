@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using AutoMapper;
+using Domain;
 using Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,13 +10,23 @@ namespace Social_Network.ServiceExtension
 {
     public static class ServiceExtension
     {
-        public static void AddMongoSettings(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
-        {
-        }
+        //public static void AddMongoSettings(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
+        //{
+        //}
 
-        public static void AddRepositories(this IServiceCollection services)
-        {
+        //public static void AddRepositories(this IServiceCollection services)
+        //{
             
+        //}
+        public static void AddMapper(this IServiceCollection services)
+        {
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new Application.Mapper.UserProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
     }
 }

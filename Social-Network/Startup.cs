@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Services.Implementation;
+using Application.Services.Interfaces;
 using Domain;
 using Infrastructure;
 using Infrastructure.NoSQL;
@@ -40,13 +42,14 @@ namespace Social_Network
 
             services.AddSingleton<IMongoDbSettings>(serviceProvider =>
                 serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
-
-            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Social Network", Version = "v1" });
            
             });
+            services.AddMapper();
+            services.AddScoped<IUserService, UserService>();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +59,10 @@ namespace Social_Network
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(options => options.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
 
             app.UseHttpsRedirection();
 
