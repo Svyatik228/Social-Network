@@ -11,7 +11,7 @@ namespace Domain
     {
         IQueryable<TDocument> AsQueryable();
 
-        IEnumerable<TDocument> FilterBy(
+       IEnumerable<TDocument> FilterBy(
             Expression<Func<TDocument, bool>> filterExpression);
 
         IEnumerable<TProjected> FilterBy<TProjected>(
