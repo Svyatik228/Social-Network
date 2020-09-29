@@ -48,7 +48,8 @@ namespace Social_Network
            
             });
             services.AddMapper();
-            services.AddScoped<IUserService, UserService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICommentService, CommentService>();
             services.AddCors();
         }
 

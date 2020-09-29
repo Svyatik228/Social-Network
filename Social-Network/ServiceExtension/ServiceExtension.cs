@@ -23,6 +23,7 @@ namespace Social_Network.ServiceExtension
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new Application.Mapper.UserProfile());
+                mc.AddProfile(new Application.MapperProfilers.CommentProfile());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();

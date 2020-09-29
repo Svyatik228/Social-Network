@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using System.Text;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
-namespace Domain.Entities
+namespace Application.Dto
 {
-    [BsonCollection("users")]
-    public class User: Document
+    public class UserDto
     {
         public string UserId { get; set; }
 
