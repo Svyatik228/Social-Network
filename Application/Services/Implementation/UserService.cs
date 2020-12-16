@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Application.Dto;
 using Application.Services.Interfaces;
 using AutoMapper;
+using DataAccess.Neo4J.Entities;
+using DataAccess.Neo4J.Neo4jRepository;
 using Domain;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -16,16 +18,20 @@ namespace Application.Services.Implementation
     public class UserService: IUserService
     {
         private readonly IMongoRepository<User> _userRepository;
+        private Neo4jRepository<Neo4JUser> _neo4JRepository;
         private IMapper _mapper;
-        public UserService(IMongoRepository<User> userRepository, IMapper mapper)
+        public UserService(IMongoRepository<User> userRepository, IMapper mapper, Neo4jRepository<Neo4JUser> neo4JRepository)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _neo4JRepository = neo4JRepository;
         }
 
         public async Task AddUser(UserDto userDto)
         {
             await _userRepository.InsertOneAsync(_mapper.Map<UserDto, User>(userDto));
+            await _neo4JRepository.Add(new Neo4JUser());
+
         }
 
         public List<UserDto> GetAllUsers()

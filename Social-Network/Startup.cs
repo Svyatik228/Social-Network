@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Services.Implementation;
 using Application.Services.Interfaces;
+using DataAccess.Neo4J.Neo4jRepository;
 using Domain;
 using Infrastructure;
 using Infrastructure.NoSQL;
@@ -50,6 +51,7 @@ namespace Social_Network
             services.AddMapper();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddScoped(typeof(Neo4jRepository<>));
             services.AddCors();
         }
 
